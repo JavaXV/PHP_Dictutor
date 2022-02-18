@@ -1,0 +1,67 @@
+
+<!-- -----------------------------------Update/EDIT Account Profile-------------------------------------------- -->
+<!-----------------------------------READ EDIT PROFILE CONDITION FOR DOUBLE INSERT NOT TO OCCOUR------------------------------------
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dicetutor";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+ if (isset($_POST['submitupdate']))
+        {
+            $name        = $_POST['name'];
+            $email       = $_POST['email'];
+            $gender      = $_POST['gender'];
+            $dob_month   = $_POST['dob_month'];
+            $dob_day     =  $_POST['dob_day'];
+			$dob_year    =  $_POST['dob_year'];
+			$number1     = $_POST['number1'];
+            $number2     = $_POST['number2'];
+            $address     = $_POST['address'];
+            $vicinity    = $_POST['vicinity'];
+            $state       = $_POST['state'];
+			$description        = $_POST['description'];
+            $school             = $_POST['school'];
+            $course             = $_POST['course'];
+            $degree             = $_POST['degree'];
+            $workexperience     = $_POST['workexperience'];
+			$role               = $_POST['role'];
+            $workexperience_current_work       = $_POST['workexperience_current_work'];
+			$teaching                   = $_POST['teaching'];
+            $classes                    = $_POST['classes'];
+            $curriculum_used                   = $_POST['curriculum_used'];
+            $curriculum_explanation            = $_POST['curriculum_explanation'];
+            $tutor_description                 = $_POST['tutor_description'];
+			
+			$sql = "SELECT * FROM editprofile WHERE name LIKE '$name%' LIMIT 1";
+				$query_run = mysqli_query($conn,$sql);
+				while($row=mysqli_fetch_array($query_run)) {
+
+				$nameGet    =$row['name'];
+				if($nameGet == $name)
+				{
+				 echo "<script>alert( 'Account ALready Exist!');</script>";
+				}
+				else
+				{
+					 $query = "INSERT INTO `editprofile` ( `name`, `email`, `gender`, `dob_month`, `dob_day`, `dob_year`, `number1`, `number2`, `address`, `vicinity`, `state`, `description`, `school`, `course`, `degree`, `workexperience`, `role`, `workexperience_current_work`, `teaching`, `classes`, `curriculum_used`, `curriculum_explanation`, `tutor_description` ) VALUES ('" . $names . "', '" . $email . "', '" . $gender . "', '" . $dob_month . "', '" . $dob_day . "', '" . $dob_year . "', '" . $number1 . "', '" . $number2 . "', '" . $address . "', '" . $vicinity . "', '" . $state . "', '" . $description . "', '" . $school . "', '" . $course . "', '" . $degree . "', '" . $workexperience . "','" . $role . "', '" . $workexperience_current_work . "','" . $teaching . "', '" . $classes . "','" . $curriculum_used . "', '" . $curriculum_explanation . "', '" . $tutor_description . "')"; 
+					
+			 if(mysqli_query($conn, $query)){
+                  echo "<script>alert( 'Profile Edit Successfully Created!');</script>";
+            }else{
+                  echo "Error: " . $query . "<br>" . mysqli_error($conn);
+                 }
+
+             mysqli_close($conn);
+			 
+				} //-----else-------
+         } //-----row-------	
+} //-----isset-------
+?> 
